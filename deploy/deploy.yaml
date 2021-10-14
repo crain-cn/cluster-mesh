@@ -43,7 +43,7 @@ metadata:
   name: cluster-mesh
   namespace: zhaoyu10
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: cluster-mesh
