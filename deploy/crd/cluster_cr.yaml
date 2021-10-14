@@ -1,0 +1,91 @@
+apiVersion: cloud.mesh/v1beta1
+kind: Cluster
+metadata:
+  name: k8s-test
+spec:
+  name: "测试环境物理机集群"
+  description: "测试环境物理机集群"
+  apiServer: "https://10.90.31.11:16443"
+  kubeConfig: |-
+    {
+      "apiVersion": "v1",
+      "clusters": [
+        {
+          "cluster": {
+            "certificate-authority-data": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUN5RENDQWJDZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREFWTVJNd0VRWURWUVFERXdwcmRXSmwKY201bGRHVnpNQjRYRFRJd01EUXlNakV3TWpnd09Wb1hEVE13TURReU1ERXdNamd3T1Zvd0ZURVRNQkVHQTFVRQpBeE1LYTNWaVpYSnVaWFJsY3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBTG9ICnREUmFVNytwUEpqajczL1g1cE52RUMxaGowbWo1TUJxVVVuTDVzMnNkNFZYY2NBckNYZ0gzaDJDRnQxUmNKS1oKSmJCVzBDcmdrT2FLNmQvWXlkNUZDYzViY0Uwdm5STlB4aHg1Y1JudU9LZ2libjhPS3Fhdy8xTFRPc2c5Q3QzUwpTNXpQbEpaQW5OcDNlTFdpM216R016ZGtTb0ptcE5mcmZaZmVid3N4NkNlVUMwVmJFa3Zpd1ZlVktPbUFQNGVBCjZ3cXV6YjRXT1pjMUJKQ3JGUVRRK2dQcGljYy9MZVhjZ2w2SXBPWnZDdEtTR1VqVzFzY1IzdmVHaU1lNXpmNTEKdi9mWHZOYXdsRzI3RkZOOHRmbmJXK3dLazQ4UmE1Wjc1UHU2WnFUUU1oaFl3bVF2WHVHMUM0WVBiU1ZpdHRhOAo3TndyVnp4ZzZpUE9ncnFCQ3hrQ0F3RUFBYU1qTUNFd0RnWURWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWRFd0VCCi93UUZNQU1CQWY4d0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFBLzJuS1FRdURrbjlwZ3hVb2E2RmlGYjlVbmEKMnRzb2c4NzA2R0w2NTZld2NyZlVQQ0Z2NHgyV0p3R0EzbEV4UzJndU83WGduT1VtVFIwK0NCL1Z3aXRyNklhMgpQR0xWSW8vMWl0QVRSb0YwVnZYRmw5ZldHeXNMWmRVSVZHelhKTVVqNjVmZ05mYkpyTXJSUUdjMkxPVHhvVmgxCjRseEdETVM1ckxKRUQ0Y2VzdlRXb1JxcWhlZGYvL0VyNnFjZ2pUSFluWjBjN05kaG51V1cwcUV4QWVHcWk4cE0KblpuRkpGNENJZ1BsbElHa3QyR2FiNklidkhqMkJROHdmdlVETHpUcENSV3Ftd0c5Y3BIb2sybVA1OXBUeUxMZQptSHJzZ05VbkRTUVZDV2NBNHFqVGZRNkEzWEt5ZGlYSW5SdmRSTFVvOThXU3RaSEIrNWZmaWlRY2Fwdz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=",
+            "server": "https://10.90.31.11:16443"
+          },
+          "name": "kubernetes"
+        }
+      ],
+      "contexts": [
+        {
+          "context": {
+            "cluster": "kubernetes",
+            "user": "kubernetes-admin"
+          },
+          "name": "kubernetes-admin@kubernetes"
+        }
+      ],
+      "current-context": "kubernetes-admin@kubernetes",
+      "kind": "Config",
+      "preferences": {
+      },
+      "users": [
+        {
+          "name": "kubernetes-admin",
+          "user": {
+            "client-certificate-data": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUM4akNDQWRxZ0F3SUJBZ0lJRGtvK0hIa3E3WUF3RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TURBME1qSXhNREk0TURsYUZ3MHlNVEEwTWpJeE1ESTRNVEZhTURReApGekFWQmdOVkJBb1REbk41YzNSbGJUcHRZWE4wWlhKek1Sa3dGd1lEVlFRREV4QnJkV0psY201bGRHVnpMV0ZrCmJXbHVNSUlCSWpBTkJna3Foa2lHOXcwQkFRRUZBQU9DQVE4QU1JSUJDZ0tDQVFFQTFPR2JYWjM0dERjSXI0NFAKM3UvNWRnRko0bFZpN2JuTzlGWFFWTnNiUmhJbXZybG5FRVUzM2ZrRVpIT3o0QjEwTGNkbThJZ09ocXRJSlNaUApkamJyYklFUk5xbHNLRmQyblJPUHJQUmVKeEpLUmpjS2xtSW9MbEJ5YVFVRkRvMXE4dXB3eGV5MUl3YnF0Yi9vCjgwcFZxNE5KaUozSjhXN0Jzb1JwN3NUcHNFMnl0dCtMeG1yd2NncmFPUXpYeUNuUHFZdXdnT1JENGlLSUlxOCsKVlJvT0h2aFlZQUdEcDlRbzZ2T2xTVVR3cWxmME1vcUtrV1VKNmVtY0ZwaDNDaEQySmc3ZXBBalpCRkErb0dITAoxRkpvUXRUMkJPYW1nRGVLTVJjdjFSang4aUY3a3JyRzhLR3E0a3VEL2lsSWp3dEIydk9GVkhrczE3NUxiS0hECm1wSU9UUUlEQVFBQm95Y3dKVEFPQmdOVkhROEJBZjhFQkFNQ0JhQXdFd1lEVlIwbEJBd3dDZ1lJS3dZQkJRVUgKQXdJd0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFMaC9wdk1TMElHWjBMQ01HRVhDTnRVSjdQeUFRYWcweVZDSQpQVWVVNUloZGdXNUlScGxnNVNVTkZaSDBES1lHZ0tXQ095UVVWTWRtY2dybjljUERTUSs2ZTVUUFBRY2h5MzlhCjgveFZVYkYzTWdLam5iSVY2MFFOVW9LWFBlSHM1VUM0VXdYMnNSNDYvRUkyZnQ5SGtSQU1CWjljaExwenovWnQKTFBhL0JONTBJWVdTYnFXTDlOQ1M5OXp6QTkwTTdTNVBDSkVQQ1U5RE1yQzBNVUU1UW5lZnRsY3MvMUpiT3JKawpqaW5Yby95K2xrZTByZ0FnR1cxTkV5TmZ4RFdUckhsbDg0Q2g0UjdxSTd3UGwwUExtaklCL1k2d0loOWp6YlNuCnRWL1pOWENlS1pSbWZpbmpJNTdtUE83V29aOEt4S3BLUjBPMVIwWWt2cXFHQmI2RVNYbz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=",
+            "client-key-data": "LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcEFJQkFBS0NBUUVBMU9HYlhaMzR0RGNJcjQ0UDN1LzVkZ0ZKNGxWaTdibk85RlhRVk5zYlJoSW12cmxuCkVFVTMzZmtFWkhPejRCMTBMY2RtOElnT2hxdElKU1pQZGpicmJJRVJOcWxzS0ZkMm5ST1ByUFJlSnhKS1JqY0sKbG1Jb0xsQnlhUVVGRG8xcTh1cHd4ZXkxSXdicXRiL284MHBWcTROSmlKM0o4VzdCc29ScDdzVHBzRTJ5dHQrTAp4bXJ3Y2dyYU9Relh5Q25QcVl1d2dPUkQ0aUtJSXE4K1ZSb09IdmhZWUFHRHA5UW82dk9sU1VUd3FsZjBNb3FLCmtXVUo2ZW1jRnBoM0NoRDJKZzdlcEFqWkJGQStvR0hMMUZKb1F0VDJCT2FtZ0RlS01SY3YxUmp4OGlGN2tyckcKOEtHcTRrdUQvaWxJand0QjJ2T0ZWSGtzMTc1TGJLSERtcElPVFFJREFRQUJBb0lCQUZpU0FUVkRHNDNIYy9xdQpyWlhBM0ZhbmxKanhrN1o2MzBzelJQbDVLL0RNYm9oZDFTNmt6ZWl4eVkwTndxSVZQeGdvNVlCZjYwTkdrajY2Cm9NYjdkSm54WFRzVDVHY29kTFpIeERoZWQ2bmo1emt0ZjE4d09hMkRWUWF5eXZiU0NkUkZqR1FjNXdSS3hXNlgKQ1JIb05KcW1oZnFzUTdBS3Q5WlJWMDI3YWNzcTFrMzl4aWZRemJHQ0FBOTM3THRIYjNMUSt3Nis4UllTMzBTLwpVMFg3SUdYQlF2T2VVQXZ2Y015b3N2ZHYxOHUyR3VKNEF1b0JhekI4UTd5aENHRFU2ZGlySXR4REliZmphYUI4Ckx4d1Bvd1VHYkRZZUVSZVFJdlhPbEs5T3hQb2t5YXkxdmRYV1Bib0NaY3J6elZ4SVlaVnpFS3FSd0VJOVpSQWcKQmpDQ3NwVUNnWUVBN1pGd09mZjU1RlJ5Q2w5dCsvWUUyZERpblN2emp1bC9RdFc4YlJBN0VIbjVJZmJRUDR4MQpWK0JBMjVFay91U2VSeU4yRVpPL0VvcEluMVNkZlBKNlR6WkI4aWdUQXk0RnpBbmJVMmpTY2tvVWxWNkdtemdHClJEWFpnb2pNcHQ5TzRZR2pWMk9naVVtanBtQmswUytMbHd6d2tYdnpBMUVRcDh6aWVBTFZEQU1DZ1lFQTVXWFgKRk5jbmxmbTNaM1o2Qm5HQmJCV2dVUzFsTStWbW5leHJHRmozNTVuaVRGellDaUUzQlVkOE1sRVlmTmRQcDJiTQppdXhHdFJUT2VTT3dxbkN4Zk9PUk4ybEVnTHovSUlxbzZXYUd1RXFnS2JQWVlyc3pmbG53WlBwNHhpR1gyOXVRCklZYVp4RFNHVk5JT2U3OVNVa01YVll3aVdtd1ZZWG5tbktpWjgyOENnWUVBa3MyVzNodUFqam9vcG9SR0FMY00KVkZVaVZDRit4a2MvM3RzWkx3UWltNUhrQTdyekFQSVk2UTZveFlXeHFOazVmWmhLTTU1cktsZk5mTGZiQWdVTQowN29oa2pSMVd6ZXJXV1NWNWJzV29JMXFuc3JrdnpJbG5TenhsaHBXN0o5OXJSaGhDWFdGRkpFdTBYY3JsYUNkCno5K3RJUm5KRjdtV1l6cldqM2FnbEdVQ2dZRUFqQW9IcXlsTmVUamd4Y0NGN2JrTkVUYUNrQXZ1WkNmKzVSbVcKcDE1b3VISXd1LzFSeFoxUlFWL0thYzBuN2M1alNnWnZoNytGeXJYUTloTGJuckQ5S1FpamRmaEZZWEgvTFpaNApWMFBIcW1ta0xORWxuK0E0SjBJd2h2U0JGak1ieVpQWUFSOXliMXpCUkxhWE1PUXpGUlR3QWNGeWwxQzBITFdXCkdyeXlmdkVDZ1lBaHQ2U0NjamlPa2lpY0cxS3dwc2hvM0FxcHBwcmRiQ3I3SkovTm56MzkzRHNzeEd1N1J0ZjAKSjBZcjNwSGY2WlhKU0Izc2lCcVQ1VjB5clNjUjNXUWRnT0sxM0t3SnZqRExadDcvdlZ4dlE0L3dIc1ZHVDZnOQpvbTdtU0ovczJPMlpqNHd5OFlOYk8xWmZIVXVrYTBNRGU3eTFMOUpDSHlRcUxKa2ZmeGpCd0E9PQotLS0tLUVORCBSU0EgUFJJVkFURSBLRVktLS0tLQo="
+          }
+        }
+      ]
+    }
+  environment: "test"
+  supportEnv:
+    test:
+      defaultNodeGroup: app
+      reportGateway: ingress-endpoint
+      defaultResourceRequirements:
+        limits:
+          cpu: "4"
+          memory: 8Gi
+        requests:
+          cpu: 50m
+          memory: 1Gi
+      defaultIngressController: default
+      minPermission: namespace-owner
+      supportGateway: true
+      gatewayConfig:
+        gatewaySign: xt_ada731d53c578705957ed528b57aca3c
+        baseURL: http://gwadmin.test.xesv5.com
+      gatewayClusters:
+        - id: 2
+          type: API
+          description: 测试环境API
+        - id: 3
+          type: HA
+          description: 测试环境HA
+      dnsColicy: Default
+      dnsConfig:
+    dev:
+      defaultNodeGroup: app
+      defaultResourceRequirements:
+        limits:
+          cpu: "4"
+          memory: 8Gi
+        requests:
+          cpu: 50m
+          memory: 1Gi
+      defaultIngressController: default
+      minPermission: namespace-owner
+      supportGateway: false
+      dnsColicy: Default
+      dnsConfig:
+  ciCluster: true
+  clusterType: "std-idc"
+  registryDomain: "hub.xesv5.com"
+  notice: ""
+  initComplete: true
+  supportSLB: false
+  serviceSubnet: "10.12.0.0/16"

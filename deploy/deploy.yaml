@@ -1,0 +1,75 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  creationTimestamp: null
+  name: cluster-mesh
+rules:
+  - apiGroups:
+      - "*"
+    resources:
+      - "*"
+    verbs:
+      - "*"
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cluster-mesh
+  namespace: zhaoyu10
+secrets:
+  - name: docker-registry
+  - name: ssh-key
+imagePullSecrets:
+  - name: docker-registry
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: cluster-mesh
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-mesh
+subjects:
+  - kind: ServiceAccount
+    name: cluster-mesh
+    namespace: zhaoyu10
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: cluster-mesh
+  name: cluster-mesh
+  namespace: zhaoyu10
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: cluster-mesh
+  template:
+    metadata:
+      labels:
+        app: cluster-mesh
+      annotations:
+        scheduler.alpha.kubernetes.io/critical-pod: ''
+    spec:
+      serviceAccountName: cluster-mesh
+      serviceAccount: cluster-mesh
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+        - image: hub.xesv5.com/zhaoyu10/cluster-mesh:v1.0.2
+          name: cluster-mesh
+          command:
+            - "/usr/local/bin/manager"
+          env:
+            # If TZ is assigned, set the TZ value as the time zone
+            - name: TZ
+              value: "Asia/Shanghai"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 500m
+              memory: 500Mi

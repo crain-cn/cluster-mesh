@@ -1,3 +1,5 @@
 export GOPROXY=https://goproxy.cn
-go mod download
-go mod vendor
+#go mod download
+#go mod vendor
+
+cp -r api/ pkg/apis
