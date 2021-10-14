@@ -42,7 +42,7 @@ func New(f internalinterfaces.SharedInformerFactory, namespace string, tweakList
 
 // Clusters returns a ClusterInformer.
 func (v *version) Clusters() ClusterInformer {
-	return &clusterInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+	return &clusterInformer{factory: v.factory, tweakListOptions: v.tweakListOptions}
 }
 
 // ClusterMeshes returns a ClusterMeshInformer.
