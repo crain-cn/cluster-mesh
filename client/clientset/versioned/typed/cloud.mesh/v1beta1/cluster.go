@@ -18,7 +18,7 @@ limitations under the License.
 package v1beta1
 
 import (
-	scheme "client/clientset/versioned/scheme"
+	scheme github.com/crain-cn/cluster-mesh/client/clientset/versioned/scheme"
 	"context"
 	"time"
 

@@ -18,9 +18,9 @@ limitations under the License.
 package fake
 
 import (
-	clientset "client/clientset/versioned"
-	cloudv1beta1 "client/clientset/versioned/typed/cloud.mesh/v1beta1"
-	fakecloudv1beta1 "client/clientset/versioned/typed/cloud.mesh/v1beta1/fake"
+	clientset github.com/crain-cn/cluster-mesh/client/clientset/versioned"
+	cloudv1beta1 github.com/crain-cn/cluster-mesh/client/clientset/versioned/typed/cloud.mesh/v1beta1"
+	fakecloudv1beta1 github.com/crain-cn/cluster-mesh/client/clientset/versioned/typed/cloud.mesh/v1beta1/fake"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"

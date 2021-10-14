@@ -18,9 +18,9 @@ limitations under the License.
 package externalversions
 
 import (
-	versioned "client/clientset/versioned"
-	cloudmesh "client/informers/externalversions/cloud.mesh"
-	internalinterfaces "client/informers/externalversions/internalinterfaces"
+	versioned github.com/crain-cn/cluster-mesh/client/clientset/versioned"
+	cloudmesh github.com/crain-cn/cluster-mesh/client/informers/externalversions/cloud.mesh"
+	internalinterfaces github.com/crain-cn/cluster-mesh/client/informers/externalversions/internalinterfaces"
 	reflect "reflect"
 	sync "sync"
 	time "time"

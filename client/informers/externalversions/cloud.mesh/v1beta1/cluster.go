@@ -18,9 +18,9 @@ limitations under the License.
 package v1beta1
 
 import (
-	versioned "client/clientset/versioned"
-	internalinterfaces "client/informers/externalversions/internalinterfaces"
-	v1beta1 "client/listers/cloud.mesh/v1beta1"
+	versioned github.com/crain-cn/cluster-mesh/client/clientset/versioned"
+	internalinterfaces github.com/crain-cn/cluster-mesh/client/informers/externalversions/internalinterfaces"
+	v1beta1 github.com/crain-cn/cluster-mesh/client/listers/cloud.mesh/v1beta1"
 	"context"
 	time "time"
 

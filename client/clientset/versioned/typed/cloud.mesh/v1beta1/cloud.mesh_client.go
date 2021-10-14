@@ -18,7 +18,7 @@ limitations under the License.
 package v1beta1
 
 import (
-	"client/clientset/versioned/scheme"
+	github.com/crain-cn/cluster-mesh/client/clientset/versioned/scheme"
 
 	v1beta1 "github.com/crain-cn/cluster-mesh/api/cloud.mesh/v1beta1"
 	rest "k8s.io/client-go/rest"
