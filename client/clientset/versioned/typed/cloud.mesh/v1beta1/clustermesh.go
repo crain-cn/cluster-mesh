@@ -18,11 +18,11 @@ limitations under the License.
 package v1beta1
 
 import (
+	scheme "client/clientset/versioned/scheme"
 	"context"
 	"time"
 
 	v1beta1 "github.com/crain-cn/cluster-mesh/api/cloud.mesh/v1beta1"
-	scheme "github.com/crain-cn/cluster-mesh/client/clientset/versioned/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
 	watch "k8s.io/apimachinery/pkg/watch"
@@ -68,7 +68,7 @@ func (c *clusterMeshes) Get(ctx context.Context, name string, options v1.GetOpti
 	result = &v1beta1.ClusterMesh{}
 	err = c.client.Get().
 		Namespace(c.ns).
-		Resource("clustermeshs").
+		Resource("clustermeshes").
 		Name(name).
 		VersionedParams(&options, scheme.ParameterCodec).
 		Do(ctx).
@@ -85,7 +85,7 @@ func (c *clusterMeshes) List(ctx context.Context, opts v1.ListOptions) (result *
 	result = &v1beta1.ClusterMeshList{}
 	err = c.client.Get().
 		Namespace(c.ns).
-		Resource("clustermeshs").
+		Resource("clustermeshes").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
 		Do(ctx).
@@ -102,7 +102,7 @@ func (c *clusterMeshes) Watch(ctx context.Context, opts v1.ListOptions) (watch.I
 	opts.Watch = true
 	return c.client.Get().
 		Namespace(c.ns).
-		Resource("clustermeshs").
+		Resource("clustermeshes").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
 		Watch(ctx)
@@ -113,7 +113,7 @@ func (c *clusterMeshes) Create(ctx context.Context, clusterMesh *v1beta1.Cluster
 	result = &v1beta1.ClusterMesh{}
 	err = c.client.Post().
 		Namespace(c.ns).
-		Resource("clustermeshs").
+		Resource("clustermeshes").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Body(clusterMesh).
 		Do(ctx).
@@ -126,7 +126,7 @@ func (c *clusterMeshes) Update(ctx context.Context, clusterMesh *v1beta1.Cluster
 	result = &v1beta1.ClusterMesh{}
 	err = c.client.Put().
 		Namespace(c.ns).
-		Resource("clustermeshs").
+		Resource("clustermeshes").
 		Name(clusterMesh.Name).
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Body(clusterMesh).
@@ -141,7 +141,7 @@ func (c *clusterMeshes) UpdateStatus(ctx context.Context, clusterMesh *v1beta1.C
 	result = &v1beta1.ClusterMesh{}
 	err = c.client.Put().
 		Namespace(c.ns).
-		Resource("clustermeshs").
+		Resource("clustermeshes").
 		Name(clusterMesh.Name).
 		SubResource("status").
 		VersionedParams(&opts, scheme.ParameterCodec).
@@ -155,7 +155,7 @@ func (c *clusterMeshes) UpdateStatus(ctx context.Context, clusterMesh *v1beta1.C
 func (c *clusterMeshes) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	return c.client.Delete().
 		Namespace(c.ns).
-		Resource("clustermeshs").
+		Resource("clustermeshes").
 		Name(name).
 		Body(&opts).
 		Do(ctx).
@@ -170,7 +170,7 @@ func (c *clusterMeshes) DeleteCollection(ctx context.Context, opts v1.DeleteOpti
 	}
 	return c.client.Delete().
 		Namespace(c.ns).
-		Resource("clustermeshs").
+		Resource("clustermeshes").
 		VersionedParams(&listOpts, scheme.ParameterCodec).
 		Timeout(timeout).
 		Body(&opts).
@@ -183,7 +183,7 @@ func (c *clusterMeshes) Patch(ctx context.Context, name string, pt types.PatchTy
 	result = &v1beta1.ClusterMesh{}
 	err = c.client.Patch(pt).
 		Namespace(c.ns).
-		Resource("clustermeshs").
+		Resource("clustermeshes").
 		Name(name).
 		SubResource(subresources...).
 		VersionedParams(&opts, scheme.ParameterCodec).

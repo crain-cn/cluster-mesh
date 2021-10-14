@@ -18,13 +18,13 @@ limitations under the License.
 package v1beta1
 
 import (
+	versioned "client/clientset/versioned"
+	internalinterfaces "client/informers/externalversions/internalinterfaces"
+	v1beta1 "client/listers/cloud.mesh/v1beta1"
 	"context"
 	time "time"
 
-	cloudxesv5comv1beta1 "github.com/crain-cn/cluster-mesh/api/cloud.mesh/v1beta1"
-	versioned "github.com/crain-cn/cluster-mesh/client/clientset/versioned"
-	internalinterfaces "github.com/crain-cn/cluster-mesh/client/informers/externalversions/internalinterfaces"
-	v1beta1 "github.com/crain-cn/cluster-mesh/client/listers/cloud.mesh/v1beta1"
+	cloudmeshv1beta1 "github.com/crain-cn/cluster-mesh/api/cloud.mesh/v1beta1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	watch "k8s.io/apimachinery/pkg/watch"
@@ -70,7 +70,7 @@ func NewFilteredClusterMeshInformer(client versioned.Interface, namespace string
 				return client.CloudV1beta1().ClusterMeshes(namespace).Watch(context.TODO(), options)
 			},
 		},
-		&cloudxesv5comv1beta1.ClusterMesh{},
+		&cloudmeshv1beta1.ClusterMesh{},
 		resyncPeriod,
 		indexers,
 	)
@@ -81,7 +81,7 @@ func (f *clusterMeshInformer) defaultInformer(client versioned.Interface, resync
 }
 
 func (f *clusterMeshInformer) Informer() cache.SharedIndexInformer {
-	return f.factory.InformerFor(&cloudxesv5comv1beta1.ClusterMesh{}, f.defaultInformer)
+	return f.factory.InformerFor(&cloudmeshv1beta1.ClusterMesh{}, f.defaultInformer)
 }
 
 func (f *clusterMeshInformer) Lister() v1beta1.ClusterMeshLister {

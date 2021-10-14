@@ -18,9 +18,9 @@ limitations under the License.
 package versioned
 
 import (
+	cloudv1beta1 "client/clientset/versioned/typed/cloud.mesh/v1beta1"
 	"fmt"
 
-	cloudv1beta1 "github.com/crain-cn/cluster-mesh/client/clientset/versioned/typed/cloud.mesh/v1beta1"
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"
 	flowcontrol "k8s.io/client-go/util/flowcontrol"

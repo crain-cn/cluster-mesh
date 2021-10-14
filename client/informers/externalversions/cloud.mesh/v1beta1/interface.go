@@ -18,7 +18,7 @@ limitations under the License.
 package v1beta1
 
 import (
-	internalinterfaces "github.com/crain-cn/cluster-mesh/client/informers/externalversions/internalinterfaces"
+	internalinterfaces "client/informers/externalversions/internalinterfaces"
 )
 
 // Interface provides access to all the informers in this group version.

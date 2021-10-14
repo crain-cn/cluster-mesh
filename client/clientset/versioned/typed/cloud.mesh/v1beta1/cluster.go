@@ -18,11 +18,11 @@ limitations under the License.
 package v1beta1
 
 import (
+	scheme "client/clientset/versioned/scheme"
 	"context"
 	"time"
 
 	v1beta1 "github.com/crain-cn/cluster-mesh/api/cloud.mesh/v1beta1"
-	scheme "github.com/crain-cn/cluster-mesh/client/clientset/versioned/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
 	watch "k8s.io/apimachinery/pkg/watch"

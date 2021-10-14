@@ -18,13 +18,13 @@ limitations under the License.
 package externalversions
 
 import (
+	versioned "client/clientset/versioned"
+	cloudmesh "client/informers/externalversions/cloud.mesh"
+	internalinterfaces "client/informers/externalversions/internalinterfaces"
 	reflect "reflect"
 	sync "sync"
 	time "time"
 
-	versioned "github.com/crain-cn/cluster-mesh/client/clientset/versioned"
-	cloudxesv5com "github.com/crain-cn/cluster-mesh/client/informers/externalversions/cloud.mesh"
-	internalinterfaces "github.com/crain-cn/cluster-mesh/client/informers/externalversions/internalinterfaces"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
@@ -171,9 +171,9 @@ type SharedInformerFactory interface {
 	ForResource(resource schema.GroupVersionResource) (GenericInformer, error)
 	WaitForCacheSync(stopCh <-chan struct{}) map[reflect.Type]bool
 
-	Cloud() cloudxesv5com.Interface
+	Cloud() cloudmesh.Interface
 }
 
-func (f *sharedInformerFactory) Cloud() cloudxesv5com.Interface {
-	return cloudxesv5com.New(f, f.namespace, f.tweakListOptions)
+func (f *sharedInformerFactory) Cloud() cloudmesh.Interface {
+	return cloudmesh.New(f, f.namespace, f.tweakListOptions)
 }

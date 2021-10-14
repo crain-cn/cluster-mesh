@@ -18,8 +18,8 @@ limitations under the License.
 package cloud
 
 import (
-	v1beta1 "github.com/crain-cn/cluster-mesh/client/informers/externalversions/cloud.mesh/v1beta1"
-	internalinterfaces "github.com/crain-cn/cluster-mesh/client/informers/externalversions/internalinterfaces"
+	v1beta1 "client/informers/externalversions/cloud.mesh/v1beta1"
+	internalinterfaces "client/informers/externalversions/internalinterfaces"
 )
 
 // Interface provides access to each of this group's versions.
