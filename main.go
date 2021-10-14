@@ -26,7 +26,7 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	cloudmeshv1beta1 "github.com/crain-cn/cluster-mesh/cloud.mesh/v1beta1"
+	cloudmeshv1beta1 "github.com/crain-cn/cluster-mesh/pkg/apis/cloud.mesh/v1beta1"
 	"github.com/crain-cn/cluster-mesh/pkg/controllers"
 	// +kubebuilder:scaffold:imports
 )
