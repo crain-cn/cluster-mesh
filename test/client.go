@@ -1,13 +1,14 @@
 package main
 
 import (
-	"flag"
 	"fmt"
-	clientv1 "github.com/crain-cn/cluster-mesh/client"
+	clustermesh "github.com/crain-cn/cluster-mesh/client/clientset/versioned"
+	"github.com/crain-cn/cluster-mesh/client/informers/externalversions"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/client-go/rest"
+	"k8s.io/client-go/tools/cache"
 	"k8s.io/client-go/tools/clientcmd"
+	"time"
 )
 
 func main() {
@@ -15,33 +16,28 @@ func main() {
 	var err error
 	var config *rest.Config
 
-	kubeconfig := flag.String("kubeconfig", "/Users/edz/.kube/k8s-32-dev", "absolute path to the kubeconfig file")
-
-
-	// 使用 ServiceAccount 创建集群配置（InCluster模式）
-	if config, err = rest.InClusterConfig(); err != nil {
-		// 使用 KubeConfig 文件创建集群配置
-		if config, err = clientcmd.BuildConfigFromFlags("", *kubeconfig); err != nil {
-			panic(err.Error())
-		}
+	kubeconfig := "/Users/edz/.kube/k8s-32-dev"
+	if config, err = clientcmd.BuildConfigFromFlags("", kubeconfig); err != nil {
+		panic(err.Error())
 	}
 
-	err = clientv1.InitClusterMeshClient(config)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	client := clientv1.GetClusterMeshClient()
-	selector, _ := labels.Parse("clusters.cloud.mesh/zhaoyu")
-	meshes, err := client.ListClusterMesh(selector)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	fmt.Println(meshes)
-	clusterClient, err := client.GetClusterClient("k8s-test")
+	client := clustermesh.NewForConfigOrDie(config)
+	clusters, err := client.CloudV1beta1().Clusters().List(v1.ListOptions{})
+	factory := externalversions.NewSharedInformerFactory(client, time.Minute)
+	informer := factory.Cloud().V1beta1().Clusters().Informer()
+	informer.AddEventHandler(cache.ResourceEventHandlerFuncs{
+		AddFunc: func(obj interface{}) {
+			fmt.Println(1)
+		},
+		UpdateFunc: func(oldObj, newObj interface{}) {
+			fmt.Println(2)
+		},
+		DeleteFunc: func(obj interface{}) {},
+	})
+	factory.Start(make(chan struct{}))
+	time.Sleep(time.Second * 100)
 	if err != nil {
 		fmt.Println(err)
 	}
-	clusterClient.AppsV1().Deployments("wangxiao-jichujiagou-common").List(v1.ListOptions{})
+	fmt.Println(clusters)
 }
