@@ -115,7 +115,14 @@ func (c *ClusterMeshClient) syncClusterMesh(cluster *v1beta1.Cluster) error {
 	if err != nil {
 		return err
 	}
-	log := ctrl.Log.WithName("controllers").WithName("ClusterMesh")
+	c.syncCluster(config,cluster)
+	// c.syncMesh(config,cluster)
+	return nil
+}
+
+
+func  (c *ClusterMeshClient) syncMesh(config *rest.Config,cluster *v1beta1.Cluster) {
+	log := ctrl.Log.WithName("controllers").WithName("syncMesh")
 	c.clusterMeshInformer.Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
 		AddFunc: func(obj interface{}) {
 			mesh, ok := obj.(*v1beta1.ClusterMesh)
@@ -182,6 +189,11 @@ func (c *ClusterMeshClient) syncClusterMesh(cluster *v1beta1.Cluster) error {
 			}
 		},
 	})
+}
+
+
+func  (c *ClusterMeshClient) syncCluster(config *rest.Config,cluster *v1beta1.Cluster) {
+	log := ctrl.Log.WithName("controllers").WithName("syncCluster")
 	c.clusterInformer.Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
 		AddFunc: func(obj interface{}) {
 			c, ok := obj.(*v1beta1.Cluster)
@@ -249,5 +261,5 @@ func (c *ClusterMeshClient) syncClusterMesh(cluster *v1beta1.Cluster) error {
 			}
 		},
 	})
-	return nil
 }
+
