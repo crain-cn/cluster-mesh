@@ -18,6 +18,7 @@ limitations under the License.
 package v1beta1
 
 import (
+	"context"
 	"time"
 
 	v1beta1 "github.com/crain-cn/cluster-mesh/api/cloud.mesh/v1beta1"
@@ -36,15 +37,15 @@ type ClusterMeshesGetter interface {
 
 // ClusterMeshInterface has methods to work with ClusterMesh resources.
 type ClusterMeshInterface interface {
-	Create(*v1beta1.ClusterMesh) (*v1beta1.ClusterMesh, error)
-	Update(*v1beta1.ClusterMesh) (*v1beta1.ClusterMesh, error)
-	UpdateStatus(*v1beta1.ClusterMesh) (*v1beta1.ClusterMesh, error)
-	Delete(name string, options *v1.DeleteOptions) error
-	DeleteCollection(options *v1.DeleteOptions, listOptions v1.ListOptions) error
-	Get(name string, options v1.GetOptions) (*v1beta1.ClusterMesh, error)
-	List(opts v1.ListOptions) (*v1beta1.ClusterMeshList, error)
-	Watch(opts v1.ListOptions) (watch.Interface, error)
-	Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1beta1.ClusterMesh, err error)
+	Create(ctx context.Context, clusterMesh *v1beta1.ClusterMesh, opts v1.CreateOptions) (*v1beta1.ClusterMesh, error)
+	Update(ctx context.Context, clusterMesh *v1beta1.ClusterMesh, opts v1.UpdateOptions) (*v1beta1.ClusterMesh, error)
+	UpdateStatus(ctx context.Context, clusterMesh *v1beta1.ClusterMesh, opts v1.UpdateOptions) (*v1beta1.ClusterMesh, error)
+	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
+	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1beta1.ClusterMesh, error)
+	List(ctx context.Context, opts v1.ListOptions) (*v1beta1.ClusterMeshList, error)
+	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1beta1.ClusterMesh, err error)
 	ClusterMeshExpansion
 }
 
@@ -63,20 +64,20 @@ func newClusterMeshes(c *CloudV1beta1Client, namespace string) *clusterMeshes {
 }
 
 // Get takes name of the clusterMesh, and returns the corresponding clusterMesh object, and an error if there is any.
-func (c *clusterMeshes) Get(name string, options v1.GetOptions) (result *v1beta1.ClusterMesh, err error) {
+func (c *clusterMeshes) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1beta1.ClusterMesh, err error) {
 	result = &v1beta1.ClusterMesh{}
 	err = c.client.Get().
 		Namespace(c.ns).
 		Resource("clustermeshes").
 		Name(name).
 		VersionedParams(&options, scheme.ParameterCodec).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }
 
 // List takes label and field selectors, and returns the list of ClusterMeshes that match those selectors.
-func (c *clusterMeshes) List(opts v1.ListOptions) (result *v1beta1.ClusterMeshList, err error) {
+func (c *clusterMeshes) List(ctx context.Context, opts v1.ListOptions) (result *v1beta1.ClusterMeshList, err error) {
 	var timeout time.Duration
 	if opts.TimeoutSeconds != nil {
 		timeout = time.Duration(*opts.TimeoutSeconds) * time.Second
@@ -87,13 +88,13 @@ func (c *clusterMeshes) List(opts v1.ListOptions) (result *v1beta1.ClusterMeshLi
 		Resource("clustermeshes").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }
 
 // Watch returns a watch.Interface that watches the requested clusterMeshes.
-func (c *clusterMeshes) Watch(opts v1.ListOptions) (watch.Interface, error) {
+func (c *clusterMeshes) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	var timeout time.Duration
 	if opts.TimeoutSeconds != nil {
 		timeout = time.Duration(*opts.TimeoutSeconds) * time.Second
@@ -104,87 +105,90 @@ func (c *clusterMeshes) Watch(opts v1.ListOptions) (watch.Interface, error) {
 		Resource("clustermeshes").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
-		Watch()
+		Watch(ctx)
 }
 
 // Create takes the representation of a clusterMesh and creates it.  Returns the server's representation of the clusterMesh, and an error, if there is any.
-func (c *clusterMeshes) Create(clusterMesh *v1beta1.ClusterMesh) (result *v1beta1.ClusterMesh, err error) {
+func (c *clusterMeshes) Create(ctx context.Context, clusterMesh *v1beta1.ClusterMesh, opts v1.CreateOptions) (result *v1beta1.ClusterMesh, err error) {
 	result = &v1beta1.ClusterMesh{}
 	err = c.client.Post().
 		Namespace(c.ns).
 		Resource("clustermeshes").
+		VersionedParams(&opts, scheme.ParameterCodec).
 		Body(clusterMesh).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }
 
 // Update takes the representation of a clusterMesh and updates it. Returns the server's representation of the clusterMesh, and an error, if there is any.
-func (c *clusterMeshes) Update(clusterMesh *v1beta1.ClusterMesh) (result *v1beta1.ClusterMesh, err error) {
+func (c *clusterMeshes) Update(ctx context.Context, clusterMesh *v1beta1.ClusterMesh, opts v1.UpdateOptions) (result *v1beta1.ClusterMesh, err error) {
 	result = &v1beta1.ClusterMesh{}
 	err = c.client.Put().
 		Namespace(c.ns).
 		Resource("clustermeshes").
 		Name(clusterMesh.Name).
+		VersionedParams(&opts, scheme.ParameterCodec).
 		Body(clusterMesh).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }
 
 // UpdateStatus was generated because the type contains a Status member.
 // Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-
-func (c *clusterMeshes) UpdateStatus(clusterMesh *v1beta1.ClusterMesh) (result *v1beta1.ClusterMesh, err error) {
+func (c *clusterMeshes) UpdateStatus(ctx context.Context, clusterMesh *v1beta1.ClusterMesh, opts v1.UpdateOptions) (result *v1beta1.ClusterMesh, err error) {
 	result = &v1beta1.ClusterMesh{}
 	err = c.client.Put().
 		Namespace(c.ns).
 		Resource("clustermeshes").
 		Name(clusterMesh.Name).
 		SubResource("status").
+		VersionedParams(&opts, scheme.ParameterCodec).
 		Body(clusterMesh).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }
 
 // Delete takes name of the clusterMesh and deletes it. Returns an error if one occurs.
-func (c *clusterMeshes) Delete(name string, options *v1.DeleteOptions) error {
+func (c *clusterMeshes) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	return c.client.Delete().
 		Namespace(c.ns).
 		Resource("clustermeshes").
 		Name(name).
-		Body(options).
-		Do().
+		Body(&opts).
+		Do(ctx).
 		Error()
 }
 
 // DeleteCollection deletes a collection of objects.
-func (c *clusterMeshes) DeleteCollection(options *v1.DeleteOptions, listOptions v1.ListOptions) error {
+func (c *clusterMeshes) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
 	var timeout time.Duration
-	if listOptions.TimeoutSeconds != nil {
-		timeout = time.Duration(*listOptions.TimeoutSeconds) * time.Second
+	if listOpts.TimeoutSeconds != nil {
+		timeout = time.Duration(*listOpts.TimeoutSeconds) * time.Second
 	}
 	return c.client.Delete().
 		Namespace(c.ns).
 		Resource("clustermeshes").
-		VersionedParams(&listOptions, scheme.ParameterCodec).
+		VersionedParams(&listOpts, scheme.ParameterCodec).
 		Timeout(timeout).
-		Body(options).
-		Do().
+		Body(&opts).
+		Do(ctx).
 		Error()
 }
 
 // Patch applies the patch and returns the patched clusterMesh.
-func (c *clusterMeshes) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1beta1.ClusterMesh, err error) {
+func (c *clusterMeshes) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1beta1.ClusterMesh, err error) {
 	result = &v1beta1.ClusterMesh{}
 	err = c.client.Patch(pt).
 		Namespace(c.ns).
 		Resource("clustermeshes").
-		SubResource(subresources...).
 		Name(name).
+		SubResource(subresources...).
+		VersionedParams(&opts, scheme.ParameterCodec).
 		Body(data).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }

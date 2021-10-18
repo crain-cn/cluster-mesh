@@ -25,8 +25,10 @@ import (
 )
 
 // ClusterMeshLister helps list ClusterMeshes.
+// All objects returned here must be treated as read-only.
 type ClusterMeshLister interface {
 	// List lists all ClusterMeshes in the indexer.
+	// Objects returned here must be treated as read-only.
 	List(selector labels.Selector) (ret []*v1beta1.ClusterMesh, err error)
 	// ClusterMeshes returns an object that can list and get ClusterMeshes.
 	ClusterMeshes(namespace string) ClusterMeshNamespaceLister
@@ -57,10 +59,13 @@ func (s *clusterMeshLister) ClusterMeshes(namespace string) ClusterMeshNamespace
 }
 
 // ClusterMeshNamespaceLister helps list and get ClusterMeshes.
+// All objects returned here must be treated as read-only.
 type ClusterMeshNamespaceLister interface {
 	// List lists all ClusterMeshes in the indexer for a given namespace.
+	// Objects returned here must be treated as read-only.
 	List(selector labels.Selector) (ret []*v1beta1.ClusterMesh, err error)
 	// Get retrieves the ClusterMesh from the indexer for a given namespace and name.
+	// Objects returned here must be treated as read-only.
 	Get(name string) (*v1beta1.ClusterMesh, error)
 	ClusterMeshNamespaceListerExpansion
 }

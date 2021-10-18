@@ -18,6 +18,7 @@ limitations under the License.
 package v1beta1
 
 import (
+	"context"
 	time "time"
 
 	cloudmeshv1beta1 "github.com/crain-cn/cluster-mesh/api/cloud.mesh/v1beta1"
@@ -60,13 +61,13 @@ func NewFilteredClusterMeshInformer(client versioned.Interface, namespace string
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.CloudV1beta1().ClusterMeshes(namespace).List(options)
+				return client.CloudV1beta1().ClusterMeshes(namespace).List(context.TODO(), options)
 			},
 			WatchFunc: func(options v1.ListOptions) (watch.Interface, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.CloudV1beta1().ClusterMeshes(namespace).Watch(options)
+				return client.CloudV1beta1().ClusterMeshes(namespace).Watch(context.TODO(), options)
 			},
 		},
 		&cloudmeshv1beta1.ClusterMesh{},

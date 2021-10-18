@@ -18,6 +18,8 @@ limitations under the License.
 package fake
 
 import (
+	"context"
+
 	v1beta1 "github.com/crain-cn/cluster-mesh/api/cloud.mesh/v1beta1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	labels "k8s.io/apimachinery/pkg/labels"
@@ -38,7 +40,7 @@ var clustermeshesResource = schema.GroupVersionResource{Group: "cloud.mesh", Ver
 var clustermeshesKind = schema.GroupVersionKind{Group: "cloud.mesh", Version: "v1beta1", Kind: "ClusterMesh"}
 
 // Get takes name of the clusterMesh, and returns the corresponding clusterMesh object, and an error if there is any.
-func (c *FakeClusterMeshes) Get(name string, options v1.GetOptions) (result *v1beta1.ClusterMesh, err error) {
+func (c *FakeClusterMeshes) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1beta1.ClusterMesh, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewGetAction(clustermeshesResource, c.ns, name), &v1beta1.ClusterMesh{})
 
@@ -49,7 +51,7 @@ func (c *FakeClusterMeshes) Get(name string, options v1.GetOptions) (result *v1b
 }
 
 // List takes label and field selectors, and returns the list of ClusterMeshes that match those selectors.
-func (c *FakeClusterMeshes) List(opts v1.ListOptions) (result *v1beta1.ClusterMeshList, err error) {
+func (c *FakeClusterMeshes) List(ctx context.Context, opts v1.ListOptions) (result *v1beta1.ClusterMeshList, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewListAction(clustermeshesResource, clustermeshesKind, c.ns, opts), &v1beta1.ClusterMeshList{})
 
@@ -71,14 +73,14 @@ func (c *FakeClusterMeshes) List(opts v1.ListOptions) (result *v1beta1.ClusterMe
 }
 
 // Watch returns a watch.Interface that watches the requested clusterMeshes.
-func (c *FakeClusterMeshes) Watch(opts v1.ListOptions) (watch.Interface, error) {
+func (c *FakeClusterMeshes) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	return c.Fake.
 		InvokesWatch(testing.NewWatchAction(clustermeshesResource, c.ns, opts))
 
 }
 
 // Create takes the representation of a clusterMesh and creates it.  Returns the server's representation of the clusterMesh, and an error, if there is any.
-func (c *FakeClusterMeshes) Create(clusterMesh *v1beta1.ClusterMesh) (result *v1beta1.ClusterMesh, err error) {
+func (c *FakeClusterMeshes) Create(ctx context.Context, clusterMesh *v1beta1.ClusterMesh, opts v1.CreateOptions) (result *v1beta1.ClusterMesh, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewCreateAction(clustermeshesResource, c.ns, clusterMesh), &v1beta1.ClusterMesh{})
 
@@ -89,7 +91,7 @@ func (c *FakeClusterMeshes) Create(clusterMesh *v1beta1.ClusterMesh) (result *v1
 }
 
 // Update takes the representation of a clusterMesh and updates it. Returns the server's representation of the clusterMesh, and an error, if there is any.
-func (c *FakeClusterMeshes) Update(clusterMesh *v1beta1.ClusterMesh) (result *v1beta1.ClusterMesh, err error) {
+func (c *FakeClusterMeshes) Update(ctx context.Context, clusterMesh *v1beta1.ClusterMesh, opts v1.UpdateOptions) (result *v1beta1.ClusterMesh, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewUpdateAction(clustermeshesResource, c.ns, clusterMesh), &v1beta1.ClusterMesh{})
 
@@ -101,7 +103,7 @@ func (c *FakeClusterMeshes) Update(clusterMesh *v1beta1.ClusterMesh) (result *v1
 
 // UpdateStatus was generated because the type contains a Status member.
 // Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeClusterMeshes) UpdateStatus(clusterMesh *v1beta1.ClusterMesh) (*v1beta1.ClusterMesh, error) {
+func (c *FakeClusterMeshes) UpdateStatus(ctx context.Context, clusterMesh *v1beta1.ClusterMesh, opts v1.UpdateOptions) (*v1beta1.ClusterMesh, error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewUpdateSubresourceAction(clustermeshesResource, "status", c.ns, clusterMesh), &v1beta1.ClusterMesh{})
 
@@ -112,7 +114,7 @@ func (c *FakeClusterMeshes) UpdateStatus(clusterMesh *v1beta1.ClusterMesh) (*v1b
 }
 
 // Delete takes name of the clusterMesh and deletes it. Returns an error if one occurs.
-func (c *FakeClusterMeshes) Delete(name string, options *v1.DeleteOptions) error {
+func (c *FakeClusterMeshes) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	_, err := c.Fake.
 		Invokes(testing.NewDeleteAction(clustermeshesResource, c.ns, name), &v1beta1.ClusterMesh{})
 
@@ -120,15 +122,15 @@ func (c *FakeClusterMeshes) Delete(name string, options *v1.DeleteOptions) error
 }
 
 // DeleteCollection deletes a collection of objects.
-func (c *FakeClusterMeshes) DeleteCollection(options *v1.DeleteOptions, listOptions v1.ListOptions) error {
-	action := testing.NewDeleteCollectionAction(clustermeshesResource, c.ns, listOptions)
+func (c *FakeClusterMeshes) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
+	action := testing.NewDeleteCollectionAction(clustermeshesResource, c.ns, listOpts)
 
 	_, err := c.Fake.Invokes(action, &v1beta1.ClusterMeshList{})
 	return err
 }
 
 // Patch applies the patch and returns the patched clusterMesh.
-func (c *FakeClusterMeshes) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1beta1.ClusterMesh, err error) {
+func (c *FakeClusterMeshes) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1beta1.ClusterMesh, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewPatchSubresourceAction(clustermeshesResource, c.ns, name, pt, data, subresources...), &v1beta1.ClusterMesh{})
 
